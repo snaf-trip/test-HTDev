@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 50px;
+  height: 50px;
+  gap: 20px;
+  border-bottom: 1px solid #e4e4e4;
+  background-color: #ffffff;
+  box-sizing: initial;
+
+  .header__navList {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    .header__navItem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      font-size: 18px;
+      text-decoration: none;
+      color: #b6b6b6;
+      margin-left: 20px;
+      box-sizing: initial;
+    }
+
+    .header__navItem_active {
+      color: #a53eff;
+      border-bottom: 1px solid #a53eff;
+    }
+  }
+}
