@@ -1,8 +1,16 @@
-import React from "react"
+import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { CreatePost, AllPosts } from "./pages/export.pages";
 
-function App() {
+function App(): JSX.Element {
   return (
-    <div>App</div>
+    <>
+      <Routes>
+        <Route path="/" element={<Navigate to={"/createPost"} />} />
+        <Route path="/createPost" element={<CreatePost />} />
+        <Route path="/allPosts" element={<AllPosts />} />
+      </Routes>
+    </>
   )
 }
 
