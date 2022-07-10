@@ -1,0 +1,11 @@
+.allPosts {
+  margin-left: 10px;
+
+  .allPosts__postssList {
+    max-width: 630px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+    justify-content: center;
+  }
+}

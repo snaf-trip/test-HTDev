@@ -61,15 +61,13 @@ export const CreatePostPage = (): JSX.Element => {
         defaultValue={""}
         onChange={handleChange}
       >
-        {timeZones !== undefined ?
+        {!!timeZones && (
           timeZones.map((option) => (
             <MenuItem key={option} value={option}>
               {option}
             </MenuItem>
           ))
-          :
-          null
-        }
+        )}
       </TextField>
       <Button
         variant="contained"
