@@ -1,37 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./createPost.pages.scss";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import { getTimeZoneRequest } from "../../api/timeZone.api";
+import { createPostChecker } from "../../utils/createPost/createPostChecker.utils";
 
-const currencies = [
-  {
-    value: 'USD',
-    label: '$',
-  },
-  {
-    value: 'EUR',
-    label: '€',
-  },
-  {
-    value: 'BTC',
-    label: '฿',
-  },
-  {
-    value: 'JPY',
-    label: '¥',
-  },
-];
-
-export const CreatePost = (): JSX.Element => {
-
-  const [currency, setCurrency] = React.useState('');
+export const CreatePostPage = (): JSX.Element => {
+  const [timeZones, setTimeZones] = useState<Array<string>>();
+  const [timeZone, setTimeZone] = useState<string>();
+  const [text, setText] = useState<string>("");
+  const [sign, setSign] = useState<string>("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrency(event.target.value);
+    setTimeZone(event.target.value);
   };
+
+  useEffect(() => {
+    getTimeZoneRequest(setTimeZones);
+  }, [])
 
   return (
     <Box
@@ -49,6 +38,8 @@ export const CreatePost = (): JSX.Element => {
         multiline
         rows={4}
         className="createPostForm_textInput"
+        value={text}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setText(event.target.value)}
       />
       <TextField
         id="outlined-basic"
@@ -56,22 +47,32 @@ export const CreatePost = (): JSX.Element => {
         required
         label="Подпись"
         variant="outlined"
+        value={sign}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSign(event.target.value)}
       />
       <TextField
         id="outlined-select-currency"
         className="createPostForm_timeSelect"
         select
         label="Точное время по:"
-        value={currency}
+        defaultValue={""}
         onChange={handleChange}
       >
-        {currencies.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
+        {timeZones !== undefined ?
+          timeZones.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))
+          :
+          null
+        }
       </TextField>
-      <Button variant="contained" endIcon={<SendIcon />}>
+      <Button
+        variant="contained"
+        endIcon={<SendIcon />}
+        onClick={() => createPostChecker(timeZone, text, sign)}
+      >
         Создать
       </Button>
     </Box>

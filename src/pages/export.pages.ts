@@ -1,2 +1,2 @@
-export { CreatePost } from "./createPost/createPost.pages";
-export { AllPosts } from "./allPosts/allPosts.pages";
+export { CreatePostPage } from "./createPost/createPost.pages";
+export { AllPostsPage } from "./allPosts/allPosts.pages";

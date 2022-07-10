@@ -1,7 +1,7 @@
 import React from "react";
 import "./allPosts.pages.scss";
 
-export const AllPosts = (): JSX.Element => {
+export const AllPostsPage = (): JSX.Element => {
   return (
     <div>AllPosts</div>
   )
