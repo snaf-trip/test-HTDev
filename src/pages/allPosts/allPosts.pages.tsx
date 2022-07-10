@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Pagination, Stack, Link } from "@mui/material";
+import { Pagination, PaginationItem, Stack } from "@mui/material";
+import { Link, useLocation } from "react-router-dom";
 import "./allPosts.pages.scss";
 import { Note } from "interfaces";
 import { PostCard } from "../../components/postCard/postCard.components";
 
 export const AllPostsPage = (): JSX.Element => {
+  const location = useLocation();
+
   const [posts, setPosts] = useState<Array<Note>>([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(parseInt(location.search?.split("=")[1] || "1"));
   const [pageQty, setPageQty] = useState(0);
 
   useEffect(() => {
@@ -42,6 +45,15 @@ export const AllPostsPage = (): JSX.Element => {
               showFirstButton
               showLastButton
               onChange={(_, num) => setPage(num)}
+              renderItem={
+                (item) => (
+                  <PaginationItem
+                    component={Link}
+                    to={`/allPosts?page=${item.page}`}
+                    {...item}
+                  />
+                )
+              }
             />
           )}
         </>
