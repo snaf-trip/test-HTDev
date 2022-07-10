@@ -1,6 +1,11 @@
 .allPosts {
   margin-left: 10px;
 
+  .allPosts__numPosts {
+    width: 120px;
+    height: 30px;
+  }
+
   .allPosts__postssList {
     max-width: 630px;
     display: grid;
