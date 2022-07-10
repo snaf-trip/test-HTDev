@@ -7,12 +7,15 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import { getTimeZoneRequest } from "../../api/timeZone.api";
 import { createPostChecker } from "../../utils/createPost/createPostChecker.utils";
+import { useDispatch } from "react-redux";
 
 export const CreatePostPage = (): JSX.Element => {
   const [timeZones, setTimeZones] = useState<Array<string>>();
   const [timeZone, setTimeZone] = useState<string>();
   const [text, setText] = useState<string>("");
   const [sign, setSign] = useState<string>("");
+
+  const dispatch = useDispatch();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTimeZone(event.target.value);
@@ -71,7 +74,7 @@ export const CreatePostPage = (): JSX.Element => {
       <Button
         variant="contained"
         endIcon={<SendIcon />}
-        onClick={() => createPostChecker(timeZone, text, sign)}
+        onClick={() => createPostChecker(timeZone, text, sign, dispatch)}
       >
         Создать
       </Button>

@@ -1,10 +1,12 @@
 import { TimeRes, Note } from "../../interfaces";
+import { AnyAction, Dispatch } from "redux";
 
 export const createPost = (
   timeZone: string,
   text: string,
   sign: string,
-  response: TimeRes
+  response: TimeRes,
+  dispatch: Dispatch<AnyAction>,
 ) => {
 
   let note: Note = {
@@ -22,6 +24,5 @@ export const createPost = (
     localStorage.setItem("notes", JSON.stringify(notes));
   }
 
-  console.log("Post created");
-  console.log(note);
+  dispatch({ type: "OPEN_SNACKBAR", text: "Запсиь создана" })
 }
