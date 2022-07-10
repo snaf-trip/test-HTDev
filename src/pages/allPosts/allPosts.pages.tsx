@@ -30,53 +30,66 @@ export const AllPostsPage = (): JSX.Element => {
       setNumPosts(JSON.parse(localStorage.getItem("numPosts")));
     };
 
-    //Подсчет кол-ва страниц
-    setPageQty(Math.ceil(allPosts.length / numPosts));
+    if (allPosts !== null) {
+      //Подсчет кол-ва страниц
+      setPageQty(Math.ceil(allPosts.length / numPosts));
 
-    //Посты для определённой страницы
-    setPosts(allPosts.slice(
-      page === 1 ? 0 : page * numPosts - numPosts,
-      page === 1 ? numPosts : page * numPosts
-    ));
+      //Посты для определённой страницы
+      setPosts(allPosts.slice(
+        page === 1 ? 0 : page * numPosts - numPosts,
+        page === 1 ? numPosts : page * numPosts
+      ));
+    }
+
   }, [page, numPosts])
 
   return (
-    <div className="allPosts">
-      <Stack spacing={2}>
-        <NumPostsFilter
-          setNumPostsUnput={setNumPostsUnput}
-          numPostsUnput={numPostsUnput}
-          setNumPosts={setNumPosts}
-          setPage={setPage}
-        />
-        <div className="allPosts__postssList">
-          {
-            posts.map((post) => {
-              return (
-                <PostCard key={post.date.datetime} post={post} />
-              )
-            })
-          }
-        </div>
-        {!!pageQty && (
-          <Pagination
-            count={pageQty}
-            page={page}
-            showFirstButton
-            showLastButton
-            onChange={(_, num) => setPage(num)}
-            renderItem={
-              (item) => (
-                <PaginationItem
-                  component={Link}
-                  to={`/allPosts?page=${item.page}`}
-                  {...item}
+    <>
+      {
+        JSON.parse(localStorage.getItem("notes")) !== null ?
+          <div className="allPosts">
+            <Stack spacing={2}>
+              <NumPostsFilter
+                setNumPostsUnput={setNumPostsUnput}
+                numPostsUnput={numPostsUnput}
+                setNumPosts={setNumPosts}
+                setPage={setPage}
+              />
+              <div className="allPosts__postssList">
+                {
+                  posts !== null ?
+                    posts.map((post) => {
+                      return (
+                        <PostCard key={post.date.datetime} post={post} />
+                      )
+                    })
+                    :
+                    null
+                }
+              </div>
+              {!!pageQty && (
+                <Pagination
+                  count={pageQty}
+                  page={page}
+                  showFirstButton
+                  showLastButton
+                  onChange={(_, num) => setPage(num)}
+                  renderItem={
+                    (item) => (
+                      <PaginationItem
+                        component={Link}
+                        to={`/allPosts?page=${item.page}`}
+                        {...item}
+                      />
+                    )
+                  }
                 />
-              )
-            }
-          />
-        )}
-      </Stack>
-    </div>
+              )}
+            </Stack>
+          </div>
+          :
+          <div>Вы не создали ещё ни одного поста.</div>
+      }
+    </>
   )
 }
