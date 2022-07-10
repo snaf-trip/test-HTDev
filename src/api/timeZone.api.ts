@@ -24,13 +24,16 @@ export const getTimeRequest = (
   text: string,
   sign: string,
   dispatch: Dispatch<AnyAction>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setText: React.Dispatch<React.SetStateAction<string>>,
 ) => {
   axios.get(url + "/timezone/" + timeZone)
     .then((response: TimeRes) => {
-      createPost(timeZone, text, sign, response, dispatch);
+      createPost(timeZone, text, sign, response, dispatch, setLoading, setText);
     })
     .catch((error: object) => {
-      dispatch({ type: "OPEN_SNACKBAR", text: "Ошибка: запись не созданна", severity: "error" })
+      dispatch({ type: "OPEN_SNACKBAR", text: "Ошибка: запись не созданна", severity: "error" });
       console.log(error);
+      setLoading(false);
     })
 }

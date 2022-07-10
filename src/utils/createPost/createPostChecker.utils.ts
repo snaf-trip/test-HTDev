@@ -6,8 +6,12 @@ export const createPostChecker = (
   text: string,
   sign: string,
   dispatch: Dispatch<AnyAction>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setText: React.Dispatch<React.SetStateAction<string>>,
 ) => {
   if (timeZone !== undefined) {
-    getTimeRequest(timeZone, text, sign, dispatch)
+    getTimeRequest(timeZone, text, sign, dispatch, setLoading, setText)
+  } else {
+    setLoading(false);
   }
 }

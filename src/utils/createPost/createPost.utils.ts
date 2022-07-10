@@ -7,6 +7,8 @@ export const createPost = (
   sign: string,
   response: TimeRes,
   dispatch: Dispatch<AnyAction>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setText: React.Dispatch<React.SetStateAction<string>>,
 ) => {
 
   let note: Note = {
@@ -24,5 +26,7 @@ export const createPost = (
     localStorage.setItem("notes", JSON.stringify(notes));
   }
 
-  dispatch({ type: "OPEN_SNACKBAR", text: "Запсиь создана" })
+  dispatch({ type: "OPEN_SNACKBAR", text: "Запсиь создана" });
+  setText("");
+  setLoading(false);
 }

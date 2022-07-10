@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./createPost.pages.scss";
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -14,6 +14,7 @@ export const CreatePostPage = (): JSX.Element => {
   const [timeZone, setTimeZone] = useState<string>();
   const [text, setText] = useState<string>("");
   const [sign, setSign] = useState<string>("");
+  const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -21,8 +22,15 @@ export const CreatePostPage = (): JSX.Element => {
     setTimeZone(event.target.value);
   };
 
+  const saveInfo = () => {
+    localStorage.setItem("author", sign);
+    localStorage.setItem("timeZone", timeZone);
+  }
+
   useEffect(() => {
     getTimeZoneRequest(setTimeZones);
+    setSign(localStorage.getItem("author"));
+    setTimeZone(localStorage.getItem("timeZone"));
   }, [])
 
   return (
@@ -59,7 +67,7 @@ export const CreatePostPage = (): JSX.Element => {
         className="createPostForm_timeSelect"
         select
         label="Точное время по:"
-        defaultValue={""}
+        value={timeZone !== undefined ? timeZone : ""}
         onChange={handleChange}
       >
         {!!timeZones && (
@@ -70,13 +78,21 @@ export const CreatePostPage = (): JSX.Element => {
           ))
         )}
       </TextField>
-      <Button
+      <LoadingButton
         variant="contained"
         endIcon={<SendIcon />}
-        onClick={() => createPostChecker(timeZone, text, sign, dispatch)}
+        disabled={timeZones === undefined ? true : false}
+        loading={loading}
+        onClick={
+          () => {
+            setLoading(true);
+            createPostChecker(timeZone, text, sign, dispatch, setLoading, setText);
+            saveInfo();
+          }
+        }
       >
         Создать
-      </Button>
+      </LoadingButton>
     </Box>
   )
 }
