@@ -18,7 +18,13 @@ export const AllPostsPage = (): JSX.Element => {
   useEffect(() => {
     const allPosts = JSON.parse(localStorage.getItem("notes"));
 
-    if (localStorage.getItem("numPosts") === null) {
+    //Сохранение кол-ва выводящихся эелементов
+    let storageNumPosts = localStorage.getItem("numPosts");
+    if (
+      storageNumPosts === null ||
+      storageNumPosts === "" ||
+      storageNumPosts === "0"
+    ) {
       localStorage.setItem("numPosts", "6");
     } else {
       setNumPosts(JSON.parse(localStorage.getItem("numPosts")));

@@ -1,0 +1,21 @@
+.numPostsFilter {
+  display: flex;
+  height: 30px;
+
+  .numPostsFilter__input {
+    margin-right: 10px;
+  }
+
+  .numPostsFilter__applyButton {
+    cursor: pointer;
+    border: 1px solid #a53eff;
+    background-color: #ffffff;
+    color: #a53eff;
+
+    &:hover {
+      border: 1px solid #8b07ff;
+      background-color: #ffffff;
+      color: #8b07ff;
+    }
+  }
+}

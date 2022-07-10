@@ -10,19 +10,25 @@ interface Props {
 
 export const NumPostsFilter = (props: Props) => {
   return (
-    <div>
+    <div className="numPostsFilter">
       <input
-        className="allPosts__numPosts"
+        className="numPostsFilter__input"
         placeholder="кол-во записей"
         type="number"
+        min={0}
         onChange={e => {
           props.setNumPostsUnput(e.target.value);
         }}
         value={props.numPostsUnput}
       />
       <button
+        className="numPostsFilter__applyButton"
         onClick={() => {
-          localStorage.setItem("numPosts", props.numPostsUnput);
+          props.numPostsUnput !== "" ?
+            props.numPostsUnput !== "0"
+              ? localStorage.setItem("numPosts", props.numPostsUnput)
+              : null
+            : null
           props.setNumPosts(Number(props.numPostsUnput));
           props.setPage(1);
         }}
