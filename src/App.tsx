@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { CreatePostPage, AllPostsPage } from "./pages/export.pages";
 import { Header } from "./components/header/header.components";
+import { CustomSnackbar } from "./components/customSnackbar/customSnackbar.components";
 
 function App(): JSX.Element {
   return (
@@ -12,6 +13,7 @@ function App(): JSX.Element {
         <Route path="/createPost" element={<CreatePostPage />} />
         <Route path="/allPosts" element={<AllPostsPage />} />
       </Routes>
+      <CustomSnackbar />
     </>
   )
 }
