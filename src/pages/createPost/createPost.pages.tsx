@@ -50,6 +50,7 @@ export const CreatePostPage = (): JSX.Element => {
         required
         label="Подпись"
         variant="outlined"
+        inputProps={{ maxLength: 100 }}
         value={sign}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSign(event.target.value)}
       />
