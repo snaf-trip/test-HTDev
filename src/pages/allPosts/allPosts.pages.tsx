@@ -12,7 +12,7 @@ export const AllPostsPage = (): JSX.Element => {
   const [posts, setPosts] = useState<Array<Note>>([]);
   const [page, setPage] = useState(parseInt(location.search?.split("=")[1] || "1"));
   const [numPostsUnput, setNumPostsUnput] = useState("");
-  const [numPosts, setNumPosts] = useState(6);
+  const [numPosts, setNumPosts] = useState(10);
   const [pageQty, setPageQty] = useState(0);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export const AllPostsPage = (): JSX.Element => {
       storageNumPosts === "" ||
       storageNumPosts === "0"
     ) {
-      localStorage.setItem("numPosts", "6");
+      localStorage.setItem("numPosts", "10");
     } else {
       setNumPosts(JSON.parse(localStorage.getItem("numPosts")));
     };
@@ -43,41 +43,39 @@ export const AllPostsPage = (): JSX.Element => {
   return (
     <div className="allPosts">
       <Stack spacing={2}>
-        <>
-          <NumPostsFilter
-            setNumPostsUnput={setNumPostsUnput}
-            numPostsUnput={numPostsUnput}
-            setNumPosts={setNumPosts}
-            setPage={setPage}
-          />
-          <div className="allPosts__postssList">
-            {
-              posts.map((post, index) => {
-                return (
-                  <PostCard key={post.date.datetime} post={post} index={index} />
-                )
-              })
+        <NumPostsFilter
+          setNumPostsUnput={setNumPostsUnput}
+          numPostsUnput={numPostsUnput}
+          setNumPosts={setNumPosts}
+          setPage={setPage}
+        />
+        <div className="allPosts__postssList">
+          {
+            posts.map((post) => {
+              return (
+                <PostCard key={post.date.datetime} post={post} />
+              )
+            })
+          }
+        </div>
+        {!!pageQty && (
+          <Pagination
+            count={pageQty}
+            page={page}
+            showFirstButton
+            showLastButton
+            onChange={(_, num) => setPage(num)}
+            renderItem={
+              (item) => (
+                <PaginationItem
+                  component={Link}
+                  to={`/allPosts?page=${item.page}`}
+                  {...item}
+                />
+              )
             }
-          </div>
-          {!!pageQty && (
-            <Pagination
-              count={pageQty}
-              page={page}
-              showFirstButton
-              showLastButton
-              onChange={(_, num) => setPage(num)}
-              renderItem={
-                (item) => (
-                  <PaginationItem
-                    component={Link}
-                    to={`/allPosts?page=${item.page}`}
-                    {...item}
-                  />
-                )
-              }
-            />
-          )}
-        </>
+          />
+        )}
       </Stack>
     </div>
   )
